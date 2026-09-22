@@ -1,10 +1,9 @@
-const apiKeyMiddleware = require("../middleware/apiKey");
-
 const express = require("express");
 
 const router = express.Router();
 
 const products = require("../data/products");
+const apiKeyMiddleware = require("../middleware/apiKey");
 
 // GET All Products
 router.get("/", (req, res) => {
