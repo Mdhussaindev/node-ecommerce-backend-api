@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 
 const users = require("../data/users");
+const apiKeyMiddleware = require("../middleware/apiKey");
+
 
 // GET All Users
 router.get("/", (req, res) => {
@@ -34,7 +36,7 @@ router.get("/:id", (req, res) => {
 });
 
 // POST Add User
-router.post("/", (req, res) => {
+router.post("/", apiKeyMiddleware, (req, res) => {
   const { name, email, age } = req.body;
 
   if (!name || !email || age === undefined) {
@@ -61,7 +63,7 @@ router.post("/", (req, res) => {
 });
 
 // PUT Update User
-router.put("/:id", (req, res) => {
+router.put("/:id", apiKeyMiddleware, (req, res) => {
   const userId = Number(req.params.id);
 
   const user = users.find((user) => user.id === userId);
@@ -94,7 +96,8 @@ router.put("/:id", (req, res) => {
 });
 
 // DELETE User
-router.delete("/:id", (req, res) => {
+
+router.delete("/:id", apiKeyMiddleware, (req, res) => {
   const userId = Number(req.params.id);
 
   const userIndex = users.findIndex((user) => user.id === userId);

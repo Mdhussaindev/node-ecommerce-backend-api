@@ -1,18 +1,4 @@
-// const express = require("express");
-
-// const router = express.Router();
-
-// const products = require("../data/products");
-
-// router.get("/", (req, res) => {
-//   res.status(200).json({
-//     status: true,
-//     message: "Products fetched successfully",
-//     data: products
-//   });
-// });
-
-// module.exports = router;
+const apiKeyMiddleware = require("../middleware/apiKey");
 
 const express = require("express");
 
@@ -50,7 +36,7 @@ router.get("/:id", (req, res) => {
 });
 
 // POST Add Product
-router.post("/", (req, res) => {
+router.post("/", apiKeyMiddleware, (req, res) => {
   const { name, price, category, stock } = req.body;
 
   if (!name || price === undefined || !category || stock === undefined) {
@@ -78,7 +64,7 @@ router.post("/", (req, res) => {
 });
 
 // PUT Update Product
-router.put("/:id", (req, res) => {
+router.put("/:id", apiKeyMiddleware, (req, res) => {
   const productId = Number(req.params.id);
 
   const product = products.find((product) => product.id === productId);
@@ -112,7 +98,7 @@ router.put("/:id", (req, res) => {
 });
 
 // DELETE Product
-router.delete("/:id", (req, res) => {
+router.delete("/:id", apiKeyMiddleware, (req, res) => {
   const productId = Number(req.params.id);
 
   const productIndex = products.findIndex(

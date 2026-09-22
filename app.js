@@ -2,7 +2,6 @@ const express = require("express");
 
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
-const apiKeyMiddleware = require("./middleware/apiKey");
 
 const app = express();
 
@@ -17,19 +16,8 @@ app.get("/", (req, res) => {
   });
 });
 
-// User APIs
 app.use("/api/users", userRoutes);
-
-// Product APIs
 app.use("/api/products", productRoutes);
-
-// Protected API example
-app.use("/api/protected", apiKeyMiddleware, (req, res) => {
-  res.status(200).json({
-    status: true,
-    message: "API key is valid"
-  });
-});
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
